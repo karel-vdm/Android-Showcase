@@ -14,3 +14,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Android Showcase"
 include ':app'
+include ':authentication'
+include ':core'

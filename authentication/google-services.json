@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "728550542675",
+    "project_id": "android-showcase-49e65",
+    "storage_bucket": "android-showcase-49e65.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:728550542675:android:428d99281d6321e88ee5a6",
+        "android_client_info": {
+          "package_name": "com.karel.authentication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "728550542675-c6ft2r9jpe5am70qnpcu1nmjs3c3k4g7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhDrSvY8kHLirCR9eCQomhAUkO4Dk-ufY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "728550542675-c6ft2r9jpe5am70qnpcu1nmjs3c3k4g7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
