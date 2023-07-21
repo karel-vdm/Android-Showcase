@@ -11,7 +11,11 @@ import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import com.karel.authentication.R
 import com.karel.authentication.databinding.FragmentAuthenticationBinding
+import com.karel.core.awaitTransitionComplete
+import kotlinx.coroutines.launch
 
 class AuthenticationFragment : Fragment() {
 
@@ -28,6 +32,7 @@ class AuthenticationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        startEnterTransition()
         init()
     }
 
@@ -67,6 +72,23 @@ class AuthenticationFragment : Fragment() {
         }
     }
 
+    private fun startEnterTransition() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            binding.motionLayout.setTransition(R.id.transition_start)
+            binding.motionLayout.transitionToEnd()
+            binding.motionLayout.awaitTransitionComplete()
+            binding.motionLayout.setTransition(R.id.transition_logo_fade_in)
+            binding.motionLayout.transitionToEnd()
+            binding.motionLayout.awaitTransitionComplete()
+            binding.motionLayout.setTransition(R.id.transition_logo_slide_into_position)
+            binding.motionLayout.transitionToEnd()
+            binding.motionLayout.awaitTransitionComplete()
+            binding.motionLayout.setTransition(R.id.transition_content_fade_in)
+            binding.motionLayout.transitionToEnd()
+            binding.motionLayout.awaitTransitionComplete()
+        }
+    }
+
     private fun showToast(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
@@ -86,5 +108,4 @@ class AuthenticationFragment : Fragment() {
             )
         }
     }
-
 }
