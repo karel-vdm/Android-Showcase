@@ -4,14 +4,19 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.auth.AuthResult
+import com.karel.authentication.data.model.AuthenticationResult
 import com.karel.authentication.domain.UseCaseAuthenticateUser
+import com.karel.authentication.domain.UseCaseSaveUserCredentials
 import com.karel.authentication.domain.UseCaseValidateUserCredentials
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
-class AuthenticationViewModel : ViewModel() {
+class AuthenticationViewModel(
+    private val useCaseValidateUserCredentials: UseCaseValidateUserCredentials,
+    private val useCaseAuthenticateUser: UseCaseAuthenticateUser,
+    private val useCaseSaveUserCredentials: UseCaseSaveUserCredentials,
+) : ViewModel() {
 
     private var _userNameError = MutableLiveData<String>()
     val userNameError: LiveData<String> get() = _userNameError
@@ -25,9 +30,8 @@ class AuthenticationViewModel : ViewModel() {
     private var _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
 
-    private val useCaseValidateUserCredentials: UseCaseValidateUserCredentials =
-        UseCaseValidateUserCredentials()
-    private val useCaseAuthenticateUser: UseCaseAuthenticateUser = UseCaseAuthenticateUser()
+    private var _isLoginSuccess = MutableLiveData<Boolean>()
+    val isLoginSuccess: LiveData<Boolean> get() = _isLoginSuccess
 
     fun onLoginClicked(userName: String, password: String) {
         val isUserCredentialsValid = validateUserNameAndPassword(userName, password)
@@ -99,8 +103,14 @@ class AuthenticationViewModel : ViewModel() {
         _error.postValue(error)
     }
 
-    private fun onCompleted(authResult: AuthResult) {
-        _isLoading.postValue(false)
+    private fun onCompleted(authResult: AuthenticationResult) {
+        if (authResult.userId.isEmpty()) {
+            onError("Invalid user, please try again")
+        } else {
+            useCaseSaveUserCredentials.saveUserId(authResult.userId)
+            _isLoading.postValue(false)
+            _isLoginSuccess.postValue(true)
+        }
     }
 
 }

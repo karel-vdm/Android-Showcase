@@ -1,5 +1,6 @@
 package com.karel.authentication.ui
 
+import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,8 +13,15 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.karel.authentication.R
+import com.karel.authentication.data.AuthenticationRepository
+import com.karel.authentication.data.source.firebase.FirebaseAuthenticationDataSource
 import com.karel.authentication.databinding.FragmentAuthenticationBinding
+import com.karel.authentication.domain.UseCaseAuthenticateUser
+import com.karel.authentication.domain.UseCaseSaveUserCredentials
+import com.karel.authentication.domain.UseCaseValidateUserCredentials
 import com.karel.core.awaitTransitionComplete
 import kotlinx.coroutines.launch
 
@@ -32,12 +40,37 @@ class AuthenticationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        startEnterTransition()
-        init()
+        initialiseView()
     }
 
-    private fun init() {
-        authenticationViewModel = ViewModelProvider(this)[AuthenticationViewModel::class.java]
+    private fun initialiseView() {
+        createViewModel()
+        observeViewModel()
+        addViewListeners()
+        startEnterTransition()
+    }
+
+    private fun createViewModel() {
+        val activity = activity ?: return
+        val preferences = activity.getSharedPreferences("pref", Context.MODE_PRIVATE)
+
+        val viewModelFactory = AuthenticationViewModelFactory(
+            useCaseValidateUserCredentials = UseCaseValidateUserCredentials(),
+            useCaseAuthenticateUser = UseCaseAuthenticateUser(
+                authenticationRepository = AuthenticationRepository(
+                    dataSource = FirebaseAuthenticationDataSource(
+                        firebaseAuth = Firebase.auth
+                    )
+                )
+            ),
+            useCaseSaveUserCredentials = UseCaseSaveUserCredentials(preferences)
+        )
+
+        authenticationViewModel =
+            ViewModelProvider(this, viewModelFactory)[AuthenticationViewModel::class.java]
+    }
+
+    private fun observeViewModel() {
         authenticationViewModel.userNameError.observe(viewLifecycleOwner) {
             binding.emailEditText.error = it
         }
@@ -49,6 +82,10 @@ class AuthenticationFragment : Fragment() {
         }
         authenticationViewModel.error.observe(viewLifecycleOwner) {
             showToast(it)
+        }
+        authenticationViewModel.isLoginSuccess.observe(viewLifecycleOwner) {
+            showToast("Successfully logged in")
+            startExitTransition()
         }
 
         binding.loginButton.setOnClickListener {
@@ -63,7 +100,9 @@ class AuthenticationFragment : Fragment() {
             val password = binding.passwordEditText.editText?.text?.toString() ?: ""
             authenticationViewModel.onSignupClicked(userName, password)
         }
+    }
 
+    private fun addViewListeners() {
         binding.emailEditText.editText?.addTextChangedListener {
             binding.emailEditText.error = null
         }
@@ -76,7 +115,7 @@ class AuthenticationFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             binding.motionLayout.setTransition(R.id.transition_start)
             binding.motionLayout.transitionToEnd()
-            binding.motionLayout.awaitTransitionComplete()
+            binding.motionLayout.awaitTransitionComplete(10)
             binding.motionLayout.setTransition(R.id.transition_logo_fade_in)
             binding.motionLayout.transitionToEnd()
             binding.motionLayout.awaitTransitionComplete()
@@ -86,6 +125,19 @@ class AuthenticationFragment : Fragment() {
             binding.motionLayout.setTransition(R.id.transition_content_fade_in)
             binding.motionLayout.transitionToEnd()
             binding.motionLayout.awaitTransitionComplete()
+        }
+    }
+
+    private fun startExitTransition() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            binding.motionLayout.setTransition(R.id.transition_end)
+            binding.motionLayout.transitionToEnd()
+            binding.motionLayout.awaitTransitionComplete(10)
+            binding.motionLayout.setTransition(R.id.transition_content_fade_out)
+            binding.motionLayout.transitionToEnd()
+            binding.motionLayout.awaitTransitionComplete()
+            binding.motionLayout.setTransition(R.id.transition_logo_slide_out)
+            binding.motionLayout.transitionToEnd()
         }
     }
 
