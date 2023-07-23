@@ -16,3 +16,5 @@ rootProject.name = "Android Showcase"
 include ':app'
 include ':authentication'
 include ':core'
+include ':home'
+include ':home'

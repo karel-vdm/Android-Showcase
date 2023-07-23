@@ -8,15 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavDeepLinkRequest
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.karel.authentication.R
 import com.karel.authentication.data.AuthenticationRepository
+import com.karel.authentication.data.UserRepository
 import com.karel.authentication.data.source.firebase.FirebaseAuthenticationDataSource
 import com.karel.authentication.databinding.FragmentAuthenticationBinding
 import com.karel.authentication.domain.UseCaseAuthenticateUser
@@ -44,10 +48,10 @@ class AuthenticationFragment : Fragment() {
     }
 
     private fun initialiseView() {
+        startEnterTransition()
         createViewModel()
         observeViewModel()
         addViewListeners()
-        startEnterTransition()
     }
 
     private fun createViewModel() {
@@ -63,7 +67,9 @@ class AuthenticationFragment : Fragment() {
                     )
                 )
             ),
-            useCaseSaveUserCredentials = UseCaseSaveUserCredentials(preferences)
+            useCaseSaveUserCredentials = UseCaseSaveUserCredentials(
+                userRepository = UserRepository(preferences)
+            )
         )
 
         authenticationViewModel =
@@ -138,7 +144,17 @@ class AuthenticationFragment : Fragment() {
             binding.motionLayout.awaitTransitionComplete()
             binding.motionLayout.setTransition(R.id.transition_logo_slide_out)
             binding.motionLayout.transitionToEnd()
+            binding.motionLayout.awaitTransitionComplete()
+        }.invokeOnCompletion {
+            navigateToHomeFragment()
         }
+    }
+
+    private fun navigateToHomeFragment() {
+        val request = NavDeepLinkRequest.Builder
+            .fromUri("android-app://com.karel.home/HomeFragment".toUri())
+            .build()
+        findNavController().navigate(request)
     }
 
     private fun showToast(message: String) {

@@ -30,5 +30,27 @@
     <fragment
         android:id="@+id/AuthenticationFragment"
         android:name="com.karel.authentication.ui.AuthenticationFragment"
-        android:label="AuthenticationFragment" />
+        android:label="Authentication Fragment"
+        tools:layout="@layout/fragment_authentication">
+
+        <deepLink
+            app:uri="android-app://example.google.app/settings_fragment_two" />
+
+<!--        <action
+            android:id="@+id/action_AuthenticationFragment_to_HomeFragment"
+            app:destination="@id/HomeFragment" /> -->
+    </fragment>
+
+    <fragment
+        android:id="@+id/HomeFragment"
+        android:name="com.karel.home.HomeFragment"
+        android:label="Home Fragment"
+        tools:layout="@layout/fragment_home">
+
+        <deepLink
+            app:uri="android-app://com.karel.home/HomeFragment" />
+
+    </fragment>
+
+
 </navigation>

@@ -1,11 +1,8 @@
 package com.karel.authentication.domain
 
-import android.content.SharedPreferences
 import com.karel.authentication.data.UserRepository
 
-class UseCaseSaveUserCredentials(sharedPreferences: SharedPreferences) {
-
-    private val userRepository: UserRepository = UserRepository(sharedPreferences)
+class UseCaseSaveUserCredentials(private val userRepository: UserRepository) {
 
     fun saveUserId(userId: String) {
         return userRepository.saveUserId(userId)
