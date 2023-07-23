@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
+import androidx.navigation.NavDeepLinkRequest
+import androidx.navigation.fragment.findNavController
 import com.karel.home.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -36,11 +39,21 @@ class HomeFragment : Fragment() {
     }
 
     private fun addViewListeners() {
+        binding.dogCardView.setOnClickListener {
+
+        }
     }
 
     private fun observeViewModel() {
     }
 
     private fun createViewModel() {
+    }
+
+    private fun navigateToHomeFragment() {
+        val request = NavDeepLinkRequest.Builder
+            .fromUri("android-app://com.karel.dog/DogFragment".toUri())
+            .build()
+        findNavController().navigate(request)
     }
 }

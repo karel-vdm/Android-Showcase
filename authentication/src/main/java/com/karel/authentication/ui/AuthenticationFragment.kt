@@ -131,6 +131,8 @@ class AuthenticationFragment : Fragment() {
             binding.motionLayout.setTransition(R.id.transition_content_fade_in)
             binding.motionLayout.transitionToEnd()
             binding.motionLayout.awaitTransitionComplete()
+        }.invokeOnCompletion {
+            navigateToHomeFragment()
         }
     }
 
