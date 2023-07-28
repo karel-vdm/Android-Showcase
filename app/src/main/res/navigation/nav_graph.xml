@@ -3,54 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/AuthenticationFragment">
+    app:startDestination="@id/authenticationFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.karel.androidshowcase.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
-
-        <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.karel.androidshowcase.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
-
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/AuthenticationFragment"
+        android:id="@+id/authenticationFragment"
         android:name="com.karel.authentication.ui.AuthenticationFragment"
         android:label="Authentication Fragment"
         tools:layout="@layout/fragment_authentication">
-
-        <deepLink
-            app:uri="android-app://example.google.app/settings_fragment_two" />
-
-<!--        <action
-            android:id="@+id/action_AuthenticationFragment_to_HomeFragment"
-            app:destination="@id/HomeFragment" /> -->
+        <deepLink app:uri="android-app://com.karel.authentication/AuthenticationFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/HomeFragment"
-        android:name="com.karel.home.HomeFragment"
+        android:id="@+id/homeFragment"
+        android:name="com.karel.home.ui.HomeFragment"
         android:label="Home Fragment"
         tools:layout="@layout/fragment_home">
-
-        <deepLink
-            app:uri="android-app://com.karel.home/HomeFragment" />
-
+        <deepLink app:uri="android-app://com.karel.home/HomeFragment" />
     </fragment>
 
+    <fragment
+        android:id="@+id/movieFragmentContainer"
+        android:name="com.karel.movies.presentation.container.MovieContainerFragment"
+        android:label="Movie Container Fragment"
+        tools:layout="@layout/fragment_movie_container">
+        <deepLink app:uri="android-app://com.karel.movies.presentation.container.MovieContainerFragment" />
+    </fragment>
 
 </navigation>

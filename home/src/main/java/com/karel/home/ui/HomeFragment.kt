@@ -1,4 +1,4 @@
-package com.karel.home
+package com.karel.home.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -40,7 +40,10 @@ class HomeFragment : Fragment() {
 
     private fun addViewListeners() {
         binding.dogCardView.setOnClickListener {
-
+            navigateToDogHomeFragment()
+        }
+        binding.movieCardView.setOnClickListener {
+            navigateToMovieHomeFragment()
         }
     }
 
@@ -50,9 +53,16 @@ class HomeFragment : Fragment() {
     private fun createViewModel() {
     }
 
-    private fun navigateToHomeFragment() {
+    private fun navigateToDogHomeFragment() {
         val request = NavDeepLinkRequest.Builder
             .fromUri("android-app://com.karel.dog/DogFragment".toUri())
+            .build()
+        findNavController().navigate(request)
+    }
+
+    private fun navigateToMovieHomeFragment() {
+        val request = NavDeepLinkRequest.Builder
+            .fromUri("android-app://com.karel.movies.presentation.container.MovieContainerFragment".toUri())
             .build()
         findNavController().navigate(request)
     }
