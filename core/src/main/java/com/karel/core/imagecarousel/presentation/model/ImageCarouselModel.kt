@@ -1,4 +1,4 @@
-package com.karel.core.presentation.image_carousel.model
+package com.karel.core.imagecarousel.presentation.model
 
 import android.net.Uri
 

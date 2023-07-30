@@ -1,4 +1,4 @@
-package com.karel.core.presentation.image_carousel
+package com.karel.core.imagecarousel.presentation
 
 import android.content.Context
 import android.util.AttributeSet
@@ -7,7 +7,7 @@ import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import com.google.android.material.carousel.CarouselLayoutManager
 import com.karel.core.databinding.LayoutCarouselListBinding
-import com.karel.core.presentation.image_carousel.model.ImageCarouselModel
+import com.karel.core.imagecarousel.presentation.model.ImageCarouselModel
 
 class ImageCarousel @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null

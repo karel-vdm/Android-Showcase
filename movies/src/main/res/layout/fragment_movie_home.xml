@@ -47,17 +47,17 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.karel.core.presentation.image_carousel.ImageCarousel
+            <com.karel.core.imagecarousel.presentation.ImageCarousel
                 android:id="@+id/favourites_carousel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <com.karel.core.presentation.image_carousel.ImageCarousel
+            <com.karel.core.imagecarousel.presentation.ImageCarousel
                 android:id="@+id/resident_evil_carousel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <com.karel.core.presentation.image_carousel.ImageCarousel
+            <com.karel.core.imagecarousel.presentation.ImageCarousel
                 android:id="@+id/terminator_carousel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

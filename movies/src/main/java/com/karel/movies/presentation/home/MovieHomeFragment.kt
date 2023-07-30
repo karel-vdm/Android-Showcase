@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import com.karel.core.presentation.image_carousel.model.ImageCarouselModel
+import com.karel.core.imagecarousel.presentation.model.ImageCarouselModel
 import com.karel.movies.data.api.MovieService
 import com.karel.movies.data.database.MovieDatabase
 import com.karel.movies.data.repository.MovieRepositoryImpl

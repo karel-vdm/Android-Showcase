@@ -26,7 +26,7 @@ import com.karel.authentication.databinding.FragmentAuthenticationBinding
 import com.karel.authentication.domain.UseCaseAuthenticateUser
 import com.karel.authentication.domain.UseCaseSaveUserCredentials
 import com.karel.authentication.domain.UseCaseValidateUserCredentials
-import com.karel.core.awaitTransitionComplete
+import com.karel.core.extensions.awaitTransitionComplete
 import kotlinx.coroutines.launch
 
 class AuthenticationFragment : Fragment() {

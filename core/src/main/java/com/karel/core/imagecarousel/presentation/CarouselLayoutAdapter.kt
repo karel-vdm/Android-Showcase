@@ -1,7 +1,6 @@
-package com.karel.core.presentation.image_carousel
+package com.karel.core.imagecarousel.presentation
 
 import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView

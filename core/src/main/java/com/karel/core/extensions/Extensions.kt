@@ -1,4 +1,4 @@
-package com.karel.core
+package com.karel.core.extensions
 
 import android.util.Log
 import androidx.constraintlayout.motion.widget.MotionLayout
