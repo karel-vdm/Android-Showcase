@@ -152,13 +152,6 @@ class AuthenticationFragment : Fragment() {
         }
     }
 
-    private fun navigateToHomeFragment() {
-        val request = NavDeepLinkRequest.Builder
-            .fromUri("android-app://com.karel.home/HomeFragment".toUri())
-            .build()
-        findNavController().navigate(request)
-    }
-
     private fun showToast(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
@@ -177,5 +170,12 @@ class AuthenticationFragment : Fragment() {
                 InputMethodManager.HIDE_NOT_ALWAYS
             )
         }
+    }
+
+    private fun navigateToHomeFragment() {
+        val request = NavDeepLinkRequest.Builder
+            .fromUri("android-app://com.karel.movies.presentation.container.MovieContainerFragment".toUri())
+            .build()
+        findNavController().navigate(request)
     }
 }

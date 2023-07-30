@@ -2,27 +2,25 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph_movies"
-    app:startDestination="@id/movieHomeFragment">
+    android:id="@+id/nav_graph_movie_container"
+    app:startDestination="@id/movie_home">
 
     <fragment
-        android:id="@+id/movieHomeFragment"
+        android:id="@+id/movie_home"
         android:name="com.karel.movies.presentation.home.MovieHomeFragment"
         android:label="Movie Home Fragment"
         tools:layout="@layout/fragment_movie_home">
         <deepLink app:uri="android-app://com.karel.movies.presentation.home.MovieHomeFragment" />
     </fragment>
-
     <fragment
-        android:id="@+id/searchFragment"
+        android:id="@+id/movie_search"
         android:name="com.karel.movies.presentation.search.SearchFragment"
         android:label="SearchFragment"
         tools:layout="@layout/fragment_movie_search">
         <deepLink app:uri="android-app://com.karel.movies.presentation.search.SearchFragment" />
     </fragment>
-
     <fragment
-        android:id="@+id/favoriteFragment"
+        android:id="@+id/movie_favorite"
         android:name="com.karel.movies.presentation.favorite.FavoriteMovieFragment"
         android:label="SearchFragment"
         tools:layout="@layout/fragment_movie_favourite">

@@ -8,10 +8,9 @@ import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.navigation.NavController
 import androidx.navigation.NavDeepLinkRequest
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.karel.movies.presentation.favorite.FavoriteViewModel
 import com.karel.movies.R
 import com.karel.movies.databinding.FragmentMovieContainerBinding
 
@@ -43,7 +42,8 @@ class MovieContainerFragment : Fragment() {
     }
 
     private fun setupNavController() {
-        navController = findNavController()
+        val navHostFragment = childFragmentManager.findFragmentById(R.id.nav_host_movie) as NavHostFragment
+        navController = navHostFragment.navController
         binding.bottomNavigation.setupWithNavController(navController)
     }
 
@@ -64,16 +64,20 @@ class MovieContainerFragment : Fragment() {
     private fun addViewListeners() {
         binding.bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.movieHomeFragment -> navigateToHome()
-                R.id.favoriteFragment -> navigateToFavorites()
-                R.id.searchFragment -> navigateToSearch()
+                R.id.movie_home -> navigateToHome()
+                R.id.movie_favorite -> navigateToFavorites()
+                R.id.movie_search -> navigateToSearch()
                 else -> false
             }
         }
     }
 
     private fun navigateToHome(): Boolean {
-        return false
+        val request = NavDeepLinkRequest.Builder
+            .fromUri("android-app://com.karel.movies.presentation.home.MovieHomeFragment".toUri())
+            .build()
+        navController.navigate(request)
+        return true
     }
 
     private fun navigateToFavorites(): Boolean {
